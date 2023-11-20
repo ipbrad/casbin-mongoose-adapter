@@ -33,7 +33,8 @@ export interface MongooseAdapterOptions {
 }
 
 export interface policyLine {
-  ptype?: string,
+  id?: string,
+  pType?: string,
   v0?: string,
   v1?: string,
   v2?: string,
@@ -274,7 +275,7 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
    * @param {Object} model Casbin model to which policy rule must be loaded
    */
   loadPolicyLine(line: policyLine, model: Model) {
-    let lineText = `${line.ptype!}`;
+    let lineText = `${line.pType!}`;
 
     for (const word of [line.v0, line.v1, line.v2, line.v3, line.v4, line.v5]) {
       if (word !== undefined) {
@@ -484,7 +485,7 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
         v5: newRuleLine.v5
       }
 
-      await this.casbinRule.updateOne({ptype, v0, v1, v2, v3, v4, v5}, newModel, options);
+      await this.casbinRule.updateOne({pType: ptype, v0, v1, v2, v3, v4, v5}, newModel, options);
 
       this.autoCommit && options.session && await options.session.commitTransaction();
     } catch (err) {
@@ -509,7 +510,7 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
 
       const {ptype, v0, v1, v2, v3, v4, v5} = this.savePolicyLine(pType, rule);
 
-      await this.casbinRule.deleteMany({ptype, v0, v1, v2, v3, v4, v5}, options);
+      await this.casbinRule.deleteMany({pType: ptype, v0, v1, v2, v3, v4, v5}, options);
 
       this.autoCommit && options.session && await options.session.commitTransaction();
     } catch (err) {
@@ -557,7 +558,7 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
     const options: sessionOption = {};
     try {
       if (this.isSynced) options.session = await this.getTransaction();
-      const where: policyLine = pType ? {ptype: pType} : {};
+      const where: policyLine = pType ? {pType: pType} : {};
 
       if (fieldIndex <= 0 && fieldIndex + fieldValues.length > 0 && fieldValues[0 - fieldIndex]) {
         where.v0 = fieldValues[0 - fieldIndex];

@@ -1,5 +1,5 @@
 {
-  "name": "casbin-mongoose-adapter",
+  "name": "@prod/casbin-mongoose-adapter",
   "version": "5.3.1",
   "description": "Mongoose adapter for Casbin",
   "main": "lib/cjs/index.js",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/node-casbin/mongoose-adapter.git"
+    "url": "git@github.com:ipbrad/casbin-mongoose-adapter.git"
   },
   "bugs": {
     "url": "https://github.com/node-casbin/mongoose-adapter/issues"
@@ -46,6 +46,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
+    "artifactregistry-login": "npx google-artifactregistry-auth",
     "lint": "eslint .",
     "prepublishOnly": "npm run lint",
     "test:integration": "nyc mocha -- --config test/integration/.mocharc.js",
@@ -57,7 +58,8 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "clean": "rimraf lib",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "version": "standard-version"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.21.0",

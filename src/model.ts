@@ -15,7 +15,8 @@
 import {Schema, Document} from 'mongoose';
 
 export interface IModel extends Document {
-  ptype: string;
+  id: string,
+  pType: string;
   v0: string;
   v1: string;
   v2: string;
@@ -24,12 +25,16 @@ export interface IModel extends Document {
   v5: string;
 }
 
-export const collectionName = 'casbin_rule';
+export const collectionName = 'casbin';
 export const modelName = 'CasbinRule';
 
 export const schema = (timestamps = false) => {
   return new Schema({
-    ptype: {
+    id: {
+      type: Schema.Types.String,
+      index: true
+    },
+    pType: {
       type: Schema.Types.String,
       required: true,
       index: true
