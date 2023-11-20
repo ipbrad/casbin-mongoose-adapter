@@ -336,7 +336,7 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
    * @returns {Object} Returns a created CasbinRule record for MongoDB
    */
   savePolicyLine(pType: string, rule: string[]) {
-    const model = new this.casbinRule({ptype: pType});
+    const model = new this.casbinRule({pType: pType});
 
     if (rule.length > 0) {
       model.v0 = rule[0];
@@ -469,14 +469,14 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
    * @param {Array<String>} newRule Policy rule to add into enforcer
    * @returns {Promise<void>}
    */
-  async updatePolicy(sec: string, pType: string, oldRule: string[], newRule: string[]) {
+  async updatePolicy(sec: string, ptype: string, oldRule: string[], newRule: string[]) {
     const options: sessionOption = {};
     try {
       if (this.isSynced) options.session = await this.getTransaction();
-      const {ptype, v0, v1, v2, v3, v4, v5} = this.savePolicyLine(pType, oldRule);
-      const newRuleLine = this.savePolicyLine(pType, newRule);
+      const {pType, v0, v1, v2, v3, v4, v5} = this.savePolicyLine(ptype, oldRule);
+      const newRuleLine = this.savePolicyLine(ptype, newRule);
       const newModel = {
-        ptype: newRuleLine.ptype,
+        pType: newRuleLine.pType,
         v0: newRuleLine.v0,
         v1: newRuleLine.v1,
         v2: newRuleLine.v2,
@@ -485,7 +485,7 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
         v5: newRuleLine.v5
       }
 
-      await this.casbinRule.updateOne({pType: ptype, v0, v1, v2, v3, v4, v5}, newModel, options);
+      await this.casbinRule.updateOne({pType: pType, v0, v1, v2, v3, v4, v5}, newModel, options);
 
       this.autoCommit && options.session && await options.session.commitTransaction();
     } catch (err) {
@@ -503,14 +503,14 @@ export class MongooseAdapter implements BatchAdapter, FilteredAdapter, Updatable
    * @param {Array<String>} rule Policy rule to remove from enforcer
    * @returns {Promise<void>}
    */
-  async removePolicy(sec: string, pType: string, rule: string[]) {
+  async removePolicy(sec: string, ptype: string, rule: string[]) {
     const options: sessionOption = {};
     try {
       if (this.isSynced) options.session = await this.getTransaction();
 
-      const {ptype, v0, v1, v2, v3, v4, v5} = this.savePolicyLine(pType, rule);
+      const {pType, v0, v1, v2, v3, v4, v5} = this.savePolicyLine(ptype, rule);
 
-      await this.casbinRule.deleteMany({pType: ptype, v0, v1, v2, v3, v4, v5}, options);
+      await this.casbinRule.deleteMany({pType: pType, v0, v1, v2, v3, v4, v5}, options);
 
       this.autoCommit && options.session && await options.session.commitTransaction();
     } catch (err) {
