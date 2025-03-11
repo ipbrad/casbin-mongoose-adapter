@@ -1,6 +1,14 @@
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+### [6.3.1] merged from fork
+
+setup npmrc to publish
+gcloud artifacts print-settings npm \
+  --project=sundance-glazing \
+  --repository=interpayments-npm \
+  --location=us-south1 \
+  --scope=@prod
 
 ### [6.0.1](https://github.com/ipbrad/casbin-mongoose-adapter/compare/v6.0.0...v6.0.1) (2023-11-20)
 
