@@ -13,8 +13,9 @@
 // limitations under the License.
 
 import {Schema, Document} from 'mongoose';
+import { ObjectId } from 'bson';
 
-export interface IModel extends Document {
+export interface IModel extends Document<ObjectId | undefined> {
   id: string,
   pType: string;
   v0: string;
